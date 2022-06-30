@@ -25,13 +25,17 @@ Be sure you have git installed in your system.
 
 1. Clone this repo `git clone https://github.com/w1ld3r/crypto-signal.git`
 
-1. Enter to cripto-signal folder `cd crypto-signal`
+2. Enter to cripto-signal folder `cd crypto-signal`
 
-1. Switch to develop branch `git checkout develop`
+3. Switch to develop branch `git checkout develop`
  
-1. Create a config.yml file and put it into "app" folder.
+4. Create a config.yml file and put it into "app" folder.
 
-1. Build and run the docker container: `docker-compose up --build`
+5. Build and run the docker container: `docker-compose up --build`
+
+6. For testing and debugging run docker with "-t" option docker run --rm -ti -v $PWD/app:/app crypto-signal_app:latest
+
+7. For production run in daemon mode using "-d" option docker run --rm -di -v $PWD/app:/app crypto-signal_app:latest
 
 
 ### Configuring config.yml
