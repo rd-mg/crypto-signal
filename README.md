@@ -33,9 +33,9 @@ Be sure you have git installed in your system.
 
 5. Build and run the docker container: `docker-compose up --build`
 
-6. For testing and debugging run docker with "-t" option docker run --rm -ti -v $PWD/app:/app crypto-signal_app:latest
+6. For testing and debugging run docker with "-t" option `docker run --rm -ti -v $PWD/app:/app crypto-signal_app:latest`
 
-7. For production run in daemon mode using "-d" option docker run --rm -di -v $PWD/app:/app crypto-signal_app:latest
+7. For production run in daemon mode using "-d" option `docker run --rm -di -v $PWD/app:/app crypto-signal_app:latest`
 
 
 ### Configuring config.yml
