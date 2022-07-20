@@ -1,4 +1,4 @@
-""" Crossover analysis indicator
+""" UpTrend analysis indicator
 """
 
 import numpy
@@ -8,20 +8,16 @@ from talib import abstract
 from analyzers.utils import IndicatorUtils
 
 
-class CrossOver(IndicatorUtils):
-    def analyze(self, key_indicator, key_signal, key_indicator_index,
-                crossed_indicator, crossed_signal, crossed_indicator_index):
-        """ Tests for key_indicator crossing over the crossed_indicator.
+class UpTrend(IndicatorUtils):
+    def analyze(self, key_indicator, key_signal, key_indicator_index. key_period_count = 2):
+        """ Tests for key_indicator is going uptrend seeing period count back.
 
         Args:
             key_indicator (pandas.DataFrame): A dataframe containing the results of the analysiscrossover.py
                 for the selected key indicator.
             key_signal (str): The name of the key indicator.
             key_indicator_index (int): The configuration index of the key indicator to use.
-            crossed_indicator (pandas.DataFrame): A dataframe containing the results of the
-                analysis for the selected indicator to test for a cross.
-            crossed_signal (str): The name of the indicator expecting to be crossed.
-            crossed_indicator_index (int): The configuration index of the crossed indicator to use.
+            period_count (integer): how many periods analizer needs to go back to compare agaist current period. Default 2
 
         Returns:
             pandas.DataFrame: A dataframe containing the indicators and hot/cold values.

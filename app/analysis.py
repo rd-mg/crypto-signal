@@ -82,3 +82,16 @@ class StrategyAnalyzer():
         }
 
         return dispatcher
+
+    def uptrend_dispatcher(self):
+        """Returns a pandas.DataFrame for dynamic uptrend selector
+
+        Returns:
+            dictionary: A dictionary of functions to serve as a dynamic uptrend selector.
+        """
+
+        dispatcher = {
+            'std_uptrend': uptrend.UpTrend().analyze
+        }
+
+        return dispatcher
