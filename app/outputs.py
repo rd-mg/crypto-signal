@@ -85,6 +85,33 @@ class Output():
                             formatted_string,
                             normal_colour
                         )
+
+                    elif indicator_type == 'uptrends':
+                        key_signal = '{}_{}'.format(
+                            analysis['config']['key_signal'],
+                            analysis['config']['key_indicator_index']
+                        )
+
+                        key_value = analysis['result'].iloc[-1][key_signal]
+                        p = int(analysis['config']['key_period_count']) + 1
+                        uptrended_value = analysis['result'].iloc[-p][key_signal]
+
+                        if isinstance(key_value, float):
+                            key_value = format(key_value, '.8f')
+
+                        if isinstance(uptrended_value, float):
+                            uptrended_value = format(uptrended_value, '.8f')
+
+                        formatted_string = '{}/{}'.format(
+                            key_value, uptrended_value)
+                        output += "{}{}: {}{} \t".format(
+                            colour_code,
+                            '{} #{}'.format(indicator, i),
+                            formatted_string,
+                            normal_colour
+                        )
+
+
                     else:
                         formatted_values = list()
                         for signal in analysis['config']['signal']:

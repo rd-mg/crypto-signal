@@ -398,7 +398,7 @@ class Behaviour():
                 self.logger.warn("No such uptrend %s, skipping.", uptrend)
                 continue
 
-            for uptrend_conf in self.uptrend_conf[crossover]:
+            for uptrend_conf in self.uptrend_conf[uptrend]:
                 if not uptrend_conf['enabled']:
                     self.logger.debug("%s is disabled, skipping.", uptrend)
                     continue
