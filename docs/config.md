@@ -553,7 +553,7 @@ crossovers:
           crossed_signal: sma
 ```
 
-# 7) Crossovers
+# 8) Uptrends
 
 **enabled**\
 default: False\
