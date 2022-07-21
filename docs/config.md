@@ -7,9 +7,10 @@
 5) Indicators
 6) Informants
 7) Crossovers
-8) Conditionals
-9) Advanced Settings
-10) Examples
+8) Uptrends
+9) Conditionals
+10) Advanced Settings
+11) Examples
 
 # 1) Configuration file structure
 The configuration file is YAML formatted and consists of the following top level keys.
@@ -20,6 +21,7 @@ The configuration file is YAML formatted and consists of the following top level
 - indicators
 - informants
 - crossovers
+- uptrends
 
 You will find a detailed description of each key below
 
@@ -533,7 +535,7 @@ necessity: optional\
 description: Valid values are the name of a signal line for the select indicator or informant. Which signal to use of the selected indicator or informant.
 
 
-An example of configuring an informant would look as follows:
+An example of configuring a informant would look as follows:
 
 ```yml
 crossovers:
@@ -551,7 +553,62 @@ crossovers:
           crossed_signal: sma
 ```
 
-# 8) Conditionals
+# 7) Crossovers
+
+**enabled**\
+default: False\
+necessity: optional\
+description: Valid values are true or false. Whether to perform analysis on this indicator.
+
+**alert_enabled**\
+default: False\
+necessity: optional\
+description: Valid values are true or false. Whether to send alerts for this particular indicator.
+
+**key_indicator**\
+default: N/A\
+necessity: optional\
+description: Valid values are the name of any indicator or informant. The indicator that gets hot when it goes above the crossed indicator and cold when it goes below it.
+
+**key_indicator_index**\
+default: N/A\
+necessity: optional\
+description: Valid values are positive integers. The index of the selected key indicator or informant that you want to use.
+
+**key_indicator_type**\
+default: N/A\
+necessity: optional\
+description: Valid values are 'indicators' or 'informants'. Whether the key indicator is of type informant or indicator.
+
+**key_signal**\
+default: N/A\
+necessity: optional\
+description: Valid values are the name of a signal line for the select indicator or informant. Which signal to use of the selected indicator or informant.
+
+**key_period_count**\
+default: 1\
+necessity: optional\
+description: Position of period back to be evaluated 
+
+
+
+An example of configuring an indicator would look as follows:
+
+```yml
+uptrends:
+    std_uptrend:
+        - enabled: enable
+          alert_enabled: true
+          alert_frequency: once
+          key_indicator: stoch_rsi
+          key_indicator_index: 0
+          key_indicator_type: indicators
+          key_signal: slow_k
+          key_period_count: 1
+```
+
+
+# 9) Conditionals
 
 It's allowing you to receive notifications, only if one or more conditions are respected.
 
@@ -672,7 +729,7 @@ notifiers:
 
  The `status` will be the string set in `label`.
   
-# 9) Advanced Settings
+# 10) Advanced Settings
   ## `start_worker_interval`
   `start_worker_interval` allows to define the number of the seconds between each start of a worker (use of multi processing to manage chunk of pairs).
   It's usefull to manage time between requests to exchange servers.
@@ -693,7 +750,7 @@ notifiers:
     [...]
   ```
 
-# 10) Examples
+# 11) Examples
 Putting it all together an example config.yml might look like the config below if you want to use the default settings with bittrex
 
 ```yml
