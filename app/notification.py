@@ -223,7 +223,7 @@ class Notifier(IndicatorUtils):
                                                 # print(msg)
                                                 # deleted list(msg['values'])[0] in join out of index list uptrend
                                                 # values
-                                                key = ''.join([msg['market'], candle_period])
+                                                key = ''.join([msg['market'], list(msg['values'])[0], candle_period])
                                                 should_alert += self.should_i_alert(
                                                     key, alert_frequency)
                                             if msg['status'] == msg[
@@ -483,6 +483,19 @@ class Notifier(IndicatorUtils):
                                     values[crossed_signal] = format(
                                         values[crossed_signal], '.8f')
 
+                            elif indicator_type == 'uptrends':
+                                latest_result = analysis['result'].iloc[-1]
+
+                                key_signal = '{}_{}'.format(
+                                    analysis['config']['key_signal'],
+                                    analysis['config']['key_indicator_index']
+                                )
+
+                                values[key_signal] = analysis['result'].iloc[-1][key_signal]
+                                if isinstance(values[key_signal], float):
+                                    values[key_signal] = format(
+                                        values[key_signal], '.8f')
+
                             status = 'neutral'
                             if latest_result['is_hot']:
                                 status = 'hot'
@@ -679,6 +692,19 @@ class Notifier(IndicatorUtils):
                                 if isinstance(values[crossed_signal], float):
                                     values[crossed_signal] = format(
                                         values[crossed_signal], '.2f')
+
+                            elif indicator_type == 'uptrends':
+                                latest_result = analysis['result'].iloc[-1]
+
+                                key_signal = '{}_{}'.format(
+                                    analysis['config']['key_signal'],
+                                    analysis['config']['key_indicator_index']
+                                )
+
+                                values[key_signal] = analysis['result'].iloc[-1][key_signal]
+                                if isinstance(values[key_signal], float):
+                                    values[key_signal] = format(
+                                        values[key_signal], '.2f')
 
                             status = 'neutral'
                             if latest_result['is_hot']:
