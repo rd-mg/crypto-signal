@@ -37,6 +37,7 @@ class Behaviour():
         self.indicator_conf = config.indicators
         self.informant_conf = config.informants
         self.crossover_conf = config.crossovers
+        self.uptrend_conf = config.uptrends
         self.exchange_interface = exchange_interface
         self.strategy_analyzer = StrategyAnalyzer()
         self.notifier = notifier
@@ -161,6 +162,10 @@ class Behaviour():
                 )
 
                 new_result[exchange][market_pair]['crossovers'] = self._get_crossover_results(
+                    new_result[exchange][market_pair]
+                )
+
+                new_result[exchange][market_pair]['uptrends'] = self._get_uptrend_results(
                     new_result[exchange][market_pair]
                 )
 
@@ -370,6 +375,53 @@ class Behaviour():
                 results[crossover].append({
                     'result': crossover_dispatcher[crossover](**dispatcher_args),
                     'config': crossover_conf
+                })
+        return results
+
+    def _get_uptrend_results(self, new_result):
+        """Execute uptrend analysis on the results so far.
+
+        Args:
+            new_result (dict): A dictionary containing the results of the informant and indicator
+                analysis.
+
+        Returns:
+            list: A list of dictionaries containing the results of the analysis.
+        """
+
+        uptrend_dispatcher = self.strategy_analyzer.uptrend_dispatcher()
+        results = {uptrend: list()
+                   for uptrend in self.uptrend_conf.keys()}
+
+        for uptrend in self.uptrend_conf:
+            if uptrend not in uptrend_dispatcher:
+                self.logger.warn("No such uptrend %s, skipping.", uptrend)
+                continue
+
+            for uptrend_conf in self.uptrend_conf[uptrend]:
+                if not uptrend_conf['enabled']:
+                    self.logger.debug("%s is disabled, skipping.", uptrend)
+                    continue
+                try:
+                    key_indicator = new_result[uptrend_conf['key_indicator_type']][uptrend_conf['key_indicator']][uptrend_conf['key_indicator_index']]
+
+                    uptrend_conf['candle_period'] = uptrend_conf['key_indicator'] + \
+                        str(uptrend_conf['key_indicator_index'])
+
+                    dispatcher_args = {
+                        'key_indicator': key_indicator['result'],
+                        'key_signal': uptrend_conf['key_signal'],
+                        'key_indicator_index': uptrend_conf['key_indicator_index'],
+                        'key_period_count': uptrend_conf['key_period_count']
+                    }
+                except Exception as e:
+                    self.logger.warning(e)
+                    self.logger.warning(traceback.format_exc())
+                    continue
+
+                results[uptrend].append({
+                    'result': uptrend_dispatcher[uptrend](**dispatcher_args),
+                    'config': uptrend_conf
                 })
         return results
 

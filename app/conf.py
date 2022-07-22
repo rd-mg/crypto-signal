@@ -54,6 +54,12 @@ class Configuration():
         else:
             self.crossovers = default_config['crossovers']
 
+        if 'uptrends' in user_config:
+            self.uptrends = {
+                **default_config['uptrends'], **user_config['uptrends']}
+        else:
+            self.uptrends = default_config['uptrends']
+
         if 'exchanges' in user_config:
             self.exchanges = user_config['exchanges']
         else:

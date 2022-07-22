@@ -199,3 +199,14 @@ crossovers:
       crossed_indicator_index: 0
       crossed_indicator_type: informants
       crossed_signal: sma
+
+uptrends:
+  std_uptrend:
+    - enabled: false
+      alert_enabled: true
+      alert_frequency: once
+      key_indicator: ema
+      key_indicator_index: 0
+      key_indicator_type: informants
+      key_signal: ema
+      key_period_count: 1

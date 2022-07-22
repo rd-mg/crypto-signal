@@ -14,7 +14,7 @@ class CrossOver(IndicatorUtils):
         """ Tests for key_indicator crossing over the crossed_indicator.
 
         Args:
-            key_indicator (pandas.DataFrame): A dataframe containing the results of the analysis
+            key_indicator (pandas.DataFrame): A dataframe containing the results of the analysiscrossover.py
                 for the selected key indicator.
             key_signal (str): The name of the key indicator.
             key_indicator_index (int): The configuration index of the key indicator to use.
