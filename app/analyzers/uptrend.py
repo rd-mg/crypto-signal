@@ -17,7 +17,7 @@ class UpTrend(IndicatorUtils):
                 for the selected key indicator.
             key_signal (str): The name of the key indicator.
             key_indicator_index (int): The configuration index of the key indicator to use.
-            key_period_count (integer): how many periods analizer needs to go back to compare agaist current period. Default 1
+            key_period_count (integer): how many period analyzer needs to go back to compare current period. Default 1
 
         Returns:
             pandas.DataFrame: A dataframe containing the indicators and hot/cold values.

@@ -220,11 +220,14 @@ class Notifier(IndicatorUtils):
                                                 msg['indicator'])
                                             c_nb_conditions += 1
                                             if alert_frequency != 'once':
-                                                key = ''.join([msg['market'], list(
-                                                    msg['values'])[0], candle_period])
+                                                # print(msg)
+                                                # deleted list(msg['values'])[0] in join out of index list uptrend
+                                                # values
+                                                key = ''.join([msg['market'], candle_period])
                                                 should_alert += self.should_i_alert(
                                                     key, alert_frequency)
-                                            if msg['status'] == msg['last_status'] and alert_frequency == 'once' and not self.first_run:
+                                            if msg['status'] == msg[
+                                                'last_status'] and alert_frequency == 'once' and not self.first_run:
                                                 c_nb_once_muted += 1
                                             if msg['status'] != msg['last_status']:
                                                 c_nb_new_status += 1
@@ -615,7 +618,7 @@ class Notifier(IndicatorUtils):
                             for signal in analysis['config']['signal']:
                                 values[signal] = analysis['result'].iloc[-1][signal]
                                 ohlcv_values[exchange][market_pair][analysis['config']
-                                                                    ['candle_period']] = values
+                                ['candle_period']] = values
 
                         # Getting LRSI values
                         if 'lrsi' in new_analysis[exchange][market_pair]['informants']:
@@ -625,14 +628,15 @@ class Notifier(IndicatorUtils):
                                     values[signal] = analysis['result'].iloc[-1][signal]
 
                                 lrsi_values[exchange][market_pair][analysis['config']
-                                                                   ['candle_period']] = values
+                                ['candle_period']] = values
 
                 for indicator_type in new_analysis[exchange][market_pair]:
                     if indicator_type == 'informants':
                         continue
 
                     for indicator in new_analysis[exchange][market_pair][indicator_type]:
-                        for index, analysis in enumerate(new_analysis[exchange][market_pair][indicator_type][indicator]):
+                        for index, analysis in enumerate(
+                                new_analysis[exchange][market_pair][indicator_type][indicator]):
                             if analysis['result'].shape[0] == 0:
                                 continue
 
@@ -714,12 +718,14 @@ class Notifier(IndicatorUtils):
                                         should_alert = False
                                     else:
                                         should_alert = self.should_i_alert(''.join(
-                                            [market_pair, indicator, candle_period]), analysis['config']['alert_frequency'])
+                                            [market_pair, indicator, candle_period]),
+                                            analysis['config']['alert_frequency'])
 
                                 if not analysis['config']['alert_enabled']:
                                     should_alert = False
 
-                                if 'mute_cold' in analysis['config'] and analysis['config']['mute_cold'] == True and latest_result['is_cold'] == True:
+                                if 'mute_cold' in analysis['config'] and analysis['config']['mute_cold'] == True and \
+                                        latest_result['is_cold'] == True:
                                     self.logger.info(
                                         'Skiping cold notification for %s %s %s', market_pair, indicator, candle_period)
                                     should_alert = False
@@ -767,11 +773,14 @@ class Notifier(IndicatorUtils):
                                         del analysis['result']
 
                                     new_message = dict(
-                                        values=values, exchange=exchange, market=market_pair, base_currency=base_currency,
+                                        values=values, exchange=exchange, market=market_pair,
+                                        base_currency=base_currency,
                                         quote_currency=quote_currency, indicator=indicator, indicator_number=index,
                                         analysis=analysis, status=status, last_status=last_status,
-                                        prices=prices, lrsi=lrsi, creation_date=creation_date, hot_cold_label=hot_cold_label,
-                                        indicator_label=indicator_label, price_value=price_value, decimal_format=decimal_format)
+                                        prices=prices, lrsi=lrsi, creation_date=creation_date,
+                                        hot_cold_label=hot_cold_label,
+                                        indicator_label=indicator_label, price_value=price_value,
+                                        decimal_format=decimal_format)
 
                                     new_messages[exchange][market_pair][candle_period].append(
                                         new_message)
@@ -1043,7 +1052,7 @@ class Notifier(IndicatorUtils):
         ma25 = self.EMA(df, 25)
         ma99 = self.EMA(df, 99)
 
-        if(df['close'].count() > 120):
+        if (df['close'].count() > 120):
             df = df.iloc[-120:]
             ma7 = ma7.iloc[-120:]
             ma25 = ma25.iloc[-120:]
@@ -1073,9 +1082,9 @@ class Notifier(IndicatorUtils):
         ax.text(0.04, 0.94, 'EMA (7, close)', color='darkorange',
                 transform=ax.transAxes, fontsize=textsize, va='top')
         ax.text(0.24, 0.94, 'EMA (25, close)', color='mediumslateblue',
-                transform=ax.transAxes,  fontsize=textsize, va='top')
+                transform=ax.transAxes, fontsize=textsize, va='top')
         ax.text(0.46, 0.94, 'EMA (99, close)', color='firebrick',
-                transform=ax.transAxes,  fontsize=textsize, va='top')
+                transform=ax.transAxes, fontsize=textsize, va='top')
 
     def plot_rsi(self, ax, df):
         textsize = 11
@@ -1083,7 +1092,7 @@ class Notifier(IndicatorUtils):
 
         rsi = self.relative_strength(df["close"])
 
-        if(df['close'].count() > 120):
+        if (df['close'].count() > 120):
             df = df.iloc[-120:]
             rsi = rsi[-120:]
 
@@ -1105,7 +1114,7 @@ class Notifier(IndicatorUtils):
         df = StockDataFrame.retype(df)
         df['macd'] = df.get('macd')
 
-        if(df['macd'].count() > 120):
+        if (df['macd'].count() > 120):
             df = df.iloc[-120:]
 
         min_y = df.macd.min()
@@ -1213,7 +1222,8 @@ class Notifier(IndicatorUtils):
         return a
 
     def EMA(self, df, n, field='close'):
-        return pd.Series(talib.EMA(df[field].astype('f8').values, n), name='EMA_' + field.upper() + '_' + str(n), index=df.index)
+        return pd.Series(talib.EMA(df[field].astype('f8').values, n), name='EMA_' + field.upper() + '_' + str(n),
+                         index=df.index)
 
     def plot_ichimoku(self, ax, df, historical_data, candle_period):
         indicator_conf = {}
@@ -1226,13 +1236,14 @@ class Notifier(IndicatorUtils):
 
         tenkansen_period = indicator_conf['tenkansen_period'] if 'tenkansen_period' in indicator_conf else 20
         kijunsen_period = indicator_conf['kijunsen_period'] if 'kijunsen_period' in indicator_conf else 60
-        senkou_span_b_period = indicator_conf['senkou_span_b_period'] if 'senkou_span_b_period' in indicator_conf else 120
+        senkou_span_b_period = indicator_conf[
+            'senkou_span_b_period'] if 'senkou_span_b_period' in indicator_conf else 120
 
         textsize = 11
         ichimoku_data = ichimoku.Ichimoku().analyze(historical_data, tenkansen_period,
                                                     kijunsen_period, senkou_span_b_period, chart=True)
 
-        if(df['close'].count() > 120):
+        if (df['close'].count() > 120):
             df = df.iloc[-120:]
             ##change 146 if cloud displacement period changed in ichimoku.Ichimoku().calculate()##
             ichimoku_data = ichimoku_data.iloc[-146:]

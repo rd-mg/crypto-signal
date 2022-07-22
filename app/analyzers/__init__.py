@@ -1,1 +1,1 @@
-__all__ = ['crossover','uptrend']
+__all__ = ['crossover', 'uptrend']

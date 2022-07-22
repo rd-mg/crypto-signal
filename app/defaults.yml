@@ -209,4 +209,4 @@ uptrends:
       key_indicator_index: 0
       key_indicator_type: informants
       key_signal: ema
-      key_period_count: 2
+      key_period_count: 1
