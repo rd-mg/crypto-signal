@@ -16,7 +16,7 @@ Development branch to testing new features. This develop version has a lot of im
 - New indicator StochRSI Cross
 - New indicator Sqzmon - Squeeze Momentum Indicator
 - New option to customize ichimoku strategies and added chikou span
-- Uptrend evaluation for a signal, it compares if two last candles are uptrend
+- Uptrend evaluation for a signal, it compares two signal candles to determine uptrend
 
 
 ## Installing And Running
