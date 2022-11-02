@@ -5,7 +5,7 @@ Development branch to testing new features. This develop version has a lot of im
 ## Notable Changes
 - It creates candle bar charts with MAs, RSI and MACD. These images can be sent as part of a Telegram notification or a Webhook call.
 - It allows to include prices as part of the notification message.
-- New configuration to easily add many coins. Check bellow for "all_pairs".
+- New configuration  to easily add many coins. Check bellow for "all_pairs".
 - New config var to use a custom "indicator_label" for each configured indicator and crossovers. Mainly useful for std_crossover.
 - New indicator iiv (Increase In Volume) to try to identify a pump/dump.
 - New indicator MA Ribbon

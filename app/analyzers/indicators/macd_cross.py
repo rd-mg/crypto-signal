@@ -29,8 +29,8 @@ class MACDCross(IndicatorUtils):
         macd, macdsignal, macdhist = talib.MACD(
             dataframe['close'], fastperiod=12, slowperiod=26, signalperiod=9)
 
-        macd_values = pandas.DataFrame([macd, macdsignal]).T.rename(
-            columns={0: "macd", 1: "signal"})
+        macd_values = pandas.DataFrame([macd, macdsignal, macdhist]).T.rename(
+            columns={0: "macd", 1: "signal", 2: "macdhist"})
 
         macd_cross = pandas.concat([dataframe, macd_values], axis=1)
         macd_cross.dropna(how='all', inplace=True)
