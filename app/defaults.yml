@@ -191,6 +191,12 @@ informants:
         - roc
       candle_period: 1d
       period_count: 15
+  natr:
+    - enabled: true
+      signal:
+        - natr
+      candle_period: 1d
+      period_count: 15
 
 
 crossovers:

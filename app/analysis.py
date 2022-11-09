@@ -66,7 +66,8 @@ class StrategyAnalyzer():
             'bollinger_bands': bollinger_bands.Bollinger().analyze,
             'ohlcv': ohlcv.OHLCV().analyze,
             'lrsi': lrsi.LRSI().analyze,
-            'roc': roc.ROC().analyze
+            'roc': roc.ROC().analyze,
+            'natr': natr.NATR().analize
         }
 
         return dispatcher
