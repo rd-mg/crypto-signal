@@ -67,7 +67,7 @@ class StrategyAnalyzer():
             'ohlcv': ohlcv.OHLCV().analyze,
             'lrsi': lrsi.LRSI().analyze,
             'roc': roc.ROC().analyze,
-            'natr': natr.NATR().analize
+            'natr': natr.NATR().analyze
         }
 
         return dispatcher
