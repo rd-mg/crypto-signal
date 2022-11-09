@@ -178,6 +178,7 @@ informants:
         - upperband
         - middleband
         - lowerband
+        - bbwidth
       candle_period: 1d
   ohlcv:
     - enabled: true
