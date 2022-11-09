@@ -28,7 +28,8 @@ class Bollinger(IndicatorUtils):
         bb_columns = {
             'upperband': [numpy.nan] * dataframe.index.shape[0],
             'middleband': [numpy.nan] * dataframe.index.shape[0],
-            'lowerband': [numpy.nan] * dataframe.index.shape[0]
+            'lowerband': [numpy.nan] * dataframe.index.shape[0],
+            'bbwidth': [numpy.nan] * dataframe.index.shape[0]
         }
 
         bb_values = pandas.DataFrame(
@@ -47,6 +48,8 @@ class Bollinger(IndicatorUtils):
                 bb_values['lowerband'][index] = bb_data[0][data_index]
                 bb_values['middleband'][index] = bb_data[1][data_index]
                 bb_values['upperband'][index] = bb_data[2][data_index]
+                bb_values['bbwidth'][index] = (bb_values['upperband'][index] - \
+                                               bb_values['lowerband'][index]) / bb_values['middleband'][index]
 
         bb_values.dropna(how='all', inplace=True)
 
