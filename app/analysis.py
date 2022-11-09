@@ -65,7 +65,8 @@ class StrategyAnalyzer():
             'vwap': vwap.VWAP().analyze,
             'bollinger_bands': bollinger_bands.Bollinger().analyze,
             'ohlcv': ohlcv.OHLCV().analyze,
-            'lrsi': lrsi.LRSI().analyze
+            'lrsi': lrsi.LRSI().analyze,
+            'roc': roc.ROC().analyze
         }
 
         return dispatcher
