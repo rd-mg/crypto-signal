@@ -37,7 +37,7 @@ class BBP(IndicatorUtils):
         # Required to avoid getting same values for low, middle, up
         dataframe['close_10k'] = dataframe['close'] * 10000
 
-        up_band, mid_band, low_band = BBANDS(
+        up_band, low_band = BBANDS(
             dataframe['close_10k'], timeperiod=period_count, nbdevup=std_dev, nbdevdn=std_dev, matype=0)
 
         bbp = (dataframe['close_10k'] - low_band) / (up_band - low_band)

@@ -4,5 +4,6 @@ __all__ = [
     'sma',
     'vwap',
     'ohlcv',
-    'lrsi'
+    'lrsi',
+    'roc'
 ]
