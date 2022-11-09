@@ -1,4 +1,4 @@
-""" EMA Indicator
+""" ROC Indicator
 """
 
 import math
@@ -10,7 +10,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class ROC(IndicatorUtils):
-    def analyze(self, historical_data, period_count=14):
+    def analyze(self, historical_data, period_count=15):
         """Performs an ROC analysis on the historical data
 
                 Args:
