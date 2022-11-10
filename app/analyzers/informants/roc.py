@@ -26,7 +26,7 @@ class ROC(IndicatorUtils):
         roc_values = abstract.ROC(dataframe, period_count).to_frame()
         roc_values.dropna(how='all', inplace=True)
         roc_values.rename(columns={0: 'roc'}, inplace=True)
-        dataframe['is_hot'] = True
-        dataframe['is_cold'] = False
+        roc_values['is_hot'] = True
+        roc_values['is_cold'] = False
 
         return roc_values

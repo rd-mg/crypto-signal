@@ -26,7 +26,7 @@ class NATR(IndicatorUtils):
         natr_values = abstract.NATR(dataframe, period_count).to_frame()
         natr_values.dropna(how='all', inplace=True)
         natr_values.rename(columns={0: 'natr'}, inplace=True)
-        dataframe['is_hot'] = True
-        dataframe['is_cold'] = False
+        natr_values['is_hot'] = True
+        natr_values['is_cold'] = False
 
         return natr_values
