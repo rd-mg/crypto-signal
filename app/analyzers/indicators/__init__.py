@@ -18,5 +18,7 @@ __all__ = [
     'macd_cross',
     'stochrsi_cross',
     'sqzmom',
-    'natr'
+    'natr',
+    'bollinger_bands',
+    'roc'
 ]

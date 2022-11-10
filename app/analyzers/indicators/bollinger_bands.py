@@ -11,7 +11,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class Bollinger(IndicatorUtils):
-    def analyze(self, historical_data, signal=['bbwidth'], period_count=21):
+    def analyze(self, historical_data, signal=['bbwidth'], hot_thresh=None, cold_thresh=None,  period_count=21):
         """Performs a bollinger band analysis on the historical data
 
         Args:

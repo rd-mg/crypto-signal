@@ -142,6 +142,27 @@ indicators:
       hot: 5
       cold: 0
       candle_period: 5m
+  natr:
+    - enabled: true
+      signal:
+        - natr
+      candle_period: 1d
+      period_count: 15
+  roc:
+    - enabled: true
+      signal:
+        - roc
+      candle_period: 1d
+      period_count: 15
+  bollinger_bands:
+    - enabled: true
+      signal:
+        - upperband
+        - middleband
+        - lowerband
+        - bbwidth
+      candle_period: 1d
+
 informants:
   lrsi:
     - enabled: true
@@ -172,30 +193,10 @@ informants:
         - ema
       candle_period: 1d
       period_count: 15
-  bollinger_bands:
-    - enabled: true
-      signal:
-        - upperband
-        - middleband
-        - lowerband
-        - bbwidth
-      candle_period: 1d
   ohlcv:
     - enabled: true
       signal:
         - close
-      candle_period: 1d
-      period_count: 15
-  roc:
-    - enabled: true
-      signal:
-        - roc
-      candle_period: 1d
-      period_count: 15
-  natr:
-    - enabled: true
-      signal:
-        - natr
       candle_period: 1d
       period_count: 15
 

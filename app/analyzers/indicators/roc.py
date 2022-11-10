@@ -10,7 +10,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class ROC(IndicatorUtils):
-    def analyze(self, historical_data, signal=['roc'], period_count=14):
+    def analyze(self, historical_data, signal=['roc'], hot_thresh=None, cold_thresh=None, period_count=14):
         """Performs an ROC analysis on the historical data
 
                 Args:
