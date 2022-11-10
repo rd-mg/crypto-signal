@@ -17,6 +17,10 @@ Development branch to testing new features. This develop version has a lot of im
 - New indicator Sqzmon - Squeeze Momentum Indicator
 - New option to customize ichimoku strategies and added chikou span
 - Uptrend evaluation for a signal, it compares two signal candles to determine uptrend
+- Changed Bollinger bands indicator type from informant to indicator to send message status to telegram
+- Adde Bollinger bands width to Bollinger bands indicator
+- New Indicator NATR
+- New Indicator ROC
 
 
 ## Installing And Running
