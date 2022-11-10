@@ -5,6 +5,5 @@ __all__ = [
     'vwap',
     'ohlcv',
     'lrsi',
-    'roc',
-    'natr'
+    'roc'
 ]

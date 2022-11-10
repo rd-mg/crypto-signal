@@ -17,5 +17,6 @@ __all__ = [
     'bbp',
     'macd_cross',
     'stochrsi_cross',
-    'sqzmom'
+    'sqzmom',
+    'natr'
 ]
