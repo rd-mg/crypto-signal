@@ -10,7 +10,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class ROC(IndicatorUtils):
-    def analyze(self, historical_data, period_count=14):
+    def analyze(self, historical_data, signal=['roc'], period_count=14):
         """Performs an ROC analysis on the historical data
 
                 Args:
@@ -26,5 +26,7 @@ class ROC(IndicatorUtils):
         roc_values = abstract.ROC(dataframe, period_count).to_frame()
         roc_values.dropna(how='all', inplace=True)
         roc_values.rename(columns={0: 'roc'}, inplace=True)
+        dataframe['is_hot'] = True
+        dataframe['is_cold'] = False
 
         return roc_values

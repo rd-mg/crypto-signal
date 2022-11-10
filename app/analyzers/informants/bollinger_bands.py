@@ -11,7 +11,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class Bollinger(IndicatorUtils):
-    def analyze(self, historical_data, period_count=21):
+    def analyze(self, historical_data, signal=['bbwidth'], period_count=21):
         """Performs a bollinger band analysis on the historical data
 
         Args:
@@ -49,7 +49,9 @@ class Bollinger(IndicatorUtils):
                 bb_values['middleband'][index] = bb_data[1][data_index]
                 bb_values['upperband'][index] = bb_data[2][data_index]
                 bb_values['bbwidth'][index] = (bb_data[2][data_index] - bb_data[0][data_index]) / bb_data[1][data_index]
-
+                
+        bb_values['is_hot'] = True
+        bb_values['is_cold'] = False
         bb_values.dropna(how='all', inplace=True)
 
         return bb_values
