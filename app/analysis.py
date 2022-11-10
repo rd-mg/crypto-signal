@@ -47,7 +47,8 @@ class StrategyAnalyzer():
             'bbp': bbp.BBP().analyze,
             'macd_cross': macd_cross.MACDCross().analyze,
             'stochrsi_cross': stochrsi_cross.StochRSICross().analyze,
-            'sqzmom': sqzmom.SQZMOM().analyze
+            'sqzmom': sqzmom.SQZMOM().analyze,
+            'natr': natr.NATR().analyze
         }
 
         return dispatcher
@@ -66,8 +67,7 @@ class StrategyAnalyzer():
             'bollinger_bands': bollinger_bands.Bollinger().analyze,
             'ohlcv': ohlcv.OHLCV().analyze,
             'lrsi': lrsi.LRSI().analyze,
-            'roc': roc.ROC().analyze,
-            'natr': natr.NATR().analyze
+            'roc': roc.ROC().analyze
         }
 
         return dispatcher
