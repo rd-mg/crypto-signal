@@ -644,8 +644,8 @@ class Notifier(IndicatorUtils):
                                 ['candle_period']] = values
 
                 for indicator_type in new_analysis[exchange][market_pair]:
-                    if indicator_type == 'informants':
-                        continue
+                    # if indicator_type == 'informants':
+                    #     continue
 
                     for indicator in new_analysis[exchange][market_pair][indicator_type]:
                         for index, analysis in enumerate(
@@ -661,7 +661,7 @@ class Notifier(IndicatorUtils):
                                     new_messages[exchange][market_pair][candle_period] = list(
                                     )
 
-                            if indicator_type == 'indicators':
+                            if indicator_type == 'indicators' or indicator_type == 'informants':
                                 for signal in analysis['config']['signal']:
                                     latest_result = analysis['result'].iloc[-1]
 
