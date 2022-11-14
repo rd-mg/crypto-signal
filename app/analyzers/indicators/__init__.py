@@ -20,5 +20,6 @@ __all__ = [
     'sqzmom',
     'natr',
     'bollinger_bands',
-    'roc'
+    'roc',
+    'ifish_stoch'
 ]

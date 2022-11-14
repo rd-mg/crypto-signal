@@ -50,7 +50,8 @@ class StrategyAnalyzer():
             'sqzmom': sqzmom.SQZMOM().analyze,
             'natr': natr.NATR().analyze,
             'bollinger_bands': bollinger_bands.Bollinger().analyze,
-            'roc': roc.ROC().analyze
+            'roc': roc.ROC().analyze,
+            'ifish_stoch': ifish_stoch.IFISH_STOCH().analyze
         }
 
         return dispatcher

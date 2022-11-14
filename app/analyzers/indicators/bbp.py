@@ -7,6 +7,7 @@ import math
 
 import pandas
 from talib import BBANDS, abstract
+import numpy as np
 
 from analyzers.utils import IndicatorUtils
 

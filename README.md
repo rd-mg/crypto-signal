@@ -21,6 +21,8 @@ Development branch to testing new features. This develop version has a lot of im
 - Adde Bollinger bands width to Bollinger bands indicator
 - New Indicator NATR
 - New Indicator ROC
+- New indicator IFish Stoch
+- Added pandas-ta and dependencies in requirements
 
 
 ## Installing And Running

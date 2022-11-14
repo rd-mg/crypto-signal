@@ -162,6 +162,11 @@ indicators:
         - lowerband
         - bbwidth
       candle_period: 1d
+  ifish_stoch:
+    - enabled: true
+      signal:
+        - ifish_stoch
+      candle_period: 1d
 
 informants:
   lrsi:
