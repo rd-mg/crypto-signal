@@ -57,7 +57,7 @@ class ExchangeInterface():
                         "Unable to load exchange %s", new_exchange)
 
     @retry(retry=retry_if_exception_type(ccxt.NetworkError), stop=stop_after_attempt(3))
-    def get_historical_data(self, market_pair, exchange, time_unit, start_date=None, max_periods=24):
+    def get_historical_data(self, market_pair, exchange, time_unit, start_date=None, max_periods=50):
         """Get historical OHLCV for a symbol pair
 
         Decorators:
@@ -68,7 +68,7 @@ class ExchangeInterface():
             exchange (str): Contains the exchange to fetch the historical data from.
             time_unit (str): A string specifying the ccxt time unit i.e. 5m or 1d.
             start_date (int, optional): Timestamp in milliseconds.
-            max_periods (int, optional): Defaults to 24. Maximum number of time periods
+            max_periods (int, optional): Defaults to 50. Maximum number of time periods
               back to fetch data for.
 
         Returns:
