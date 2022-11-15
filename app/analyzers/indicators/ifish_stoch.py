@@ -40,7 +40,7 @@ class IFISH_STOCH(IndicatorUtils):
         df['fastk_t_avg'] = wma.ta.wma(length= 5, append= True)
         df['ifish_stoch'] = (np.exp(2 * df['fastk_t_avg']) - 1) / (np.exp(2 * df['fastk_t_avg']) + 1)
 
-        print(df.tail())
+        # print(df.tail())
 
         df['is_hot'] = False
         df['is_cold'] = False
