@@ -33,8 +33,8 @@ class IFISH_STOCH(IndicatorUtils):
                 
         df = pandas.DataFrame()
         df = dataframe.copy()
-        df.ta.stoch(k=5, smooth_k= 5, append=True)
-        df['fastk_t'] = 0.1 * (df['STOCHk_5_3_5'] - 50)
+        df.ta.stoch(k=5, smooth_k= 9, append=True)
+        df['fastk_t'] = 0.1 * (df['STOCHk_5_3_9'] - 50)
         wma = pandas.DataFrame()
         wma['close'] = df['fastk_t']
         df['fastk_t_avg'] = wma.ta.wma(length= 5, append= True)
