@@ -6,6 +6,8 @@ import math
 import numpy
 import pandas
 from talib import abstract
+import pandas_ta as pta
+
 
 from analyzers.utils import IndicatorUtils
 
@@ -32,20 +34,15 @@ class StochasticRSI(IndicatorUtils):
 
         dataframe = self.convert_to_dataframe(historical_data)
 
-        rsi = abstract.RSI(dataframe, period_count)
+        df = pandas.DataFrame()
+        df = dataframe.copy()
+        df.ta.stochrsi(append=True)
 
-        stochrsi  = (rsi - rsi.rolling(period_count).min()) / (rsi.rolling(period_count).max() - rsi.rolling(period_count).min())
-        stochrsi_K = stochrsi.rolling(3).mean()
-        stochrsi_D = stochrsi_K.rolling(3).mean()
+        df['stoch_rsi'] = df['STOCHRSIk_14_14_3_3']
+        df['slow_k'] = df['STOCHRSIk_14_14_3_3']
+        df['slow_d'] = df['STOCHRSId_14_14_3_3']
 
-        kd_values = pandas.DataFrame([stochrsi, stochrsi_K, stochrsi_D]).T.rename(
-            columns={0: "stoch_rsi", 1: "slow_k", 2: "slow_d"}).copy()
-
-        kd_values['stoch_rsi'] = kd_values['stoch_rsi'].multiply(100)
-        kd_values['slow_k'] = kd_values['slow_k'].multiply(100)
-        kd_values['slow_d'] = kd_values['slow_d'].multiply(100)
-
-        stoch_rsi = pandas.concat([dataframe, kd_values], axis=1)
+        stoch_rsi = pandas.concat([dataframe, df], axis=1)
         stoch_rsi.dropna(how='all', inplace=True)
 
         if stoch_rsi[signal[0]].shape[0]:
