@@ -13,7 +13,7 @@ from analyzers.utils import IndicatorUtils
 
 class IFISH_STOCH(IndicatorUtils):
 
-    def analyze(self, historical_data, signal=['ifish_stoch'], hot_thresh=-0.9, cold_thresh=0.9, period_count=5):
+    def analyze(self, historical_data, signal=['ifish_stoch'], hot_thresh=-0.9, cold_thresh=0.0, period_count=5):
         """Check when ifish value cross the Upper/Lower bands.
 
         Args:
