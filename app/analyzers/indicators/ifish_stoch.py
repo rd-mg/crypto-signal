@@ -33,14 +33,14 @@ class IFISH_STOCH(IndicatorUtils):
                 
         df = pandas.DataFrame()
         df = dataframe.copy()
-        df.ta.stoch(k=5, append=True)
-        df['fastk_t'] = 0.1 * (df['STOCHk_5_3_3'] - 50)
+        df.ta.stoch(k=5, smooth_k= 5, append=True)
+        df['fastk_t'] = 0.1 * (df['STOCHk_5_3_5'] - 50)
         wma = pandas.DataFrame()
         wma['close'] = df['fastk_t']
-        df['fastk_t_avg'] = wma.ta.wma(length= 9, append= True)
+        df['fastk_t_avg'] = wma.ta.wma(length= 5, append= True)
         df['ifish_stoch'] = (np.exp(2 * df['fastk_t_avg']) - 1) / (np.exp(2 * df['fastk_t_avg']) + 1)
 
-        # print(df.tail())
+        print(df.tail())
 
         df['is_hot'] = False
         df['is_cold'] = False
