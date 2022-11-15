@@ -37,7 +37,7 @@ class IFISH_STOCH(IndicatorUtils):
         df['fastk_t'] = 0.1 * (df['STOCHk_5_3_9'] - 50)
         wma = pandas.DataFrame()
         wma['close'] = df['fastk_t']
-        df['fastk_t_avg'] = wma.ta.wma(length= 5, append= True)
+        df['fastk_t_avg'] = wma.ta.wma(length= 9, append= True)
         df['ifish_stoch'] = (np.exp(2 * df['fastk_t_avg']) - 1) / (np.exp(2 * df['fastk_t_avg']) + 1)
 
         # print(df.tail())
