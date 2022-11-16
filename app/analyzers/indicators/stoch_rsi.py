@@ -13,7 +13,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class StochasticRSI(IndicatorUtils):
-    def analyze(self, historical_data, period_count=14,
+    def analyze(self, historical_data, period_count=9,
                 signal=['stoch_rsi'], hot_thresh=None, cold_thresh=None):
         """Performs a Stochastic RSI analysis on the historical data
 
@@ -36,7 +36,7 @@ class StochasticRSI(IndicatorUtils):
 
         df = pandas.DataFrame()
         df = dataframe.copy()
-        df.ta.stochrsi(length=9, rsi_length=9, k=5, d=5,append=True)
+        df.ta.stochrsi(length=9, rsi_length= 9, k=5, d=5,append=True)
 
         df['stoch_rsi'] = df['STOCHRSIk_9_9_5_5']
         df['slow_k'] = df['STOCHRSIk_9_9_5_5']

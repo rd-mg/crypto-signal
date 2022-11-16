@@ -10,7 +10,7 @@ from analyzers.utils import IndicatorUtils
 
 class StochRSICross(IndicatorUtils):
 
-    def analyze(self, historical_data, period_count=14, signal=['stoch_rsi'], smooth_k = 10, smooth_d = 3, hot_thresh=None, cold_thresh=None):
+    def analyze(self, historical_data, period_count=9, signal=['stoch_rsi'], smooth_k = 5, smooth_d = 5, hot_thresh=None, cold_thresh=None):
         """Performs a StochRSI cross analysis on the historical data
 
         Args:

@@ -14,7 +14,7 @@ from analyzers.utils import IndicatorUtils
 
 class BBP(IndicatorUtils):
 
-    def analyze(self, historical_data, signal=['bbp'], hot_thresh=0, cold_thresh=0.8, period_count=20, std_dev=2):
+    def analyze(self, historical_data, signal=['bbp'], hot_thresh=0.3, cold_thresh=0.8, period_count=20, std_dev=2):
         """Check when close price cross the Upper/Lower bands.
 
         Args:
@@ -49,7 +49,7 @@ class BBP(IndicatorUtils):
         bollinger['is_hot'] = False
         bollinger['is_cold'] = False
         
-        bollinger['is_hot'] = (bollinger['bbp'].iloc[-2] <= hot_thresh) & (bollinger['bbp'].iloc[-2] < bollinger['bbp'].iloc[-1])
-        bollinger['is_cold'] = bollinger['bbp'].iloc[-1] >= cold_thresh
+        bollinger['is_hot'] = (bollinger['bbp'] <= hot_thresh) & (bollinger['bbp'].shift(1) < bollinger['bbp'])
+        bollinger['is_cold'] = bollinger['bbp'] >= cold_thresh
 
         return bollinger
