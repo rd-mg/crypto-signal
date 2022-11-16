@@ -32,8 +32,8 @@ class StochRSICross(IndicatorUtils):
         df.ta.stochrsi(length=9, rsi_length=9, k=5, d=5, append=True)
 
         df['stoch_rsi'] = df['STOCHRSIk_9_9_5_5']
-        df['slow_k'] = df['STOCHRSIk_9_9_5_5']
-        df['slow_d'] = df['STOCHRSId_9_9_5_5']
+        df['smooth_k'] = df['STOCHRSIk_9_9_5_5']
+        df['smooth_d'] = df['STOCHRSId_9_9_5_5']
 
         df.dropna(how='all', inplace=True)
         
