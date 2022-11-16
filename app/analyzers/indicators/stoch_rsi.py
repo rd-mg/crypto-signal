@@ -36,11 +36,11 @@ class StochasticRSI(IndicatorUtils):
 
         df = pandas.DataFrame()
         df = dataframe.copy()
-        df.ta.stochrsi(append=True)
+        df.ta.stochrsi(length=9, rsi_length=9, k=5, d=5,append=True)
 
-        df['stoch_rsi'] = df['STOCHRSIk_14_14_3_3']
-        df['slow_k'] = df['STOCHRSIk_14_14_3_3']
-        df['slow_d'] = df['STOCHRSId_14_14_3_3']
+        df['stoch_rsi'] = df['STOCHRSIk_9_9_5_5']
+        df['slow_k'] = df['STOCHRSIk_9_9_5_5']
+        df['slow_d'] = df['STOCHRSId_9_9_5_5']
 
         stoch_rsi = pandas.concat([dataframe, df], axis=1)
         stoch_rsi.dropna(how='all', inplace=True)
