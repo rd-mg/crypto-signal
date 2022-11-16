@@ -49,7 +49,7 @@ class BBP(IndicatorUtils):
         bollinger['is_hot'] = False
         bollinger['is_cold'] = False
         
-        bollinger['is_hot'] = (bollinger['bbp'] <= hot_thresh) & (bollinger['bbp'].shift(1) < bollinger['bbp'])
+        bollinger['is_hot'] = bollinger['bbp'] <= hot_thresh
         bollinger['is_cold'] = bollinger['bbp'] >= cold_thresh
 
         return bollinger
