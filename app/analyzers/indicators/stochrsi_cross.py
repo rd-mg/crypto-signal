@@ -10,7 +10,7 @@ from analyzers.utils import IndicatorUtils
 
 class StochRSICross(IndicatorUtils):
 
-    def analyze(self, historical_data, period_count=9, signal=['stoch_rsi'], smooth_k = 5, smooth_d = 5, hot_thresh=None, cold_thresh=None):
+    def analyze(self, historical_data, period_count=9, signal=['stoch_rsi'], smooth_k = 3, smooth_d = 3, hot_thresh=None, cold_thresh=None):
         """Performs a StochRSI cross analysis on the historical data
 
         Args:
@@ -29,11 +29,11 @@ class StochRSICross(IndicatorUtils):
 
         df = pandas.DataFrame()
         df = dataframe.copy()
-        df.ta.stochrsi(length=9, rsi_length=9, k=5, d=5, append=True)
+        df.ta.stochrsi(length=9, rsi_length=9, k=3, d=3, append=True)
 
-        df['stoch_rsi'] = df['STOCHRSIk_9_9_5_5']
-        df['smooth_k'] = df['STOCHRSIk_9_9_5_5']
-        df['smooth_d'] = df['STOCHRSId_9_9_5_5']
+        df['stoch_rsi'] = df['STOCHRSIk_9_9_3_3']
+        df['smooth_k'] = df['STOCHRSIk_9_9_3_3']
+        df['smooth_d'] = df['STOCHRSId_9_9_3_3']
 
         df.dropna(how='all', inplace=True)
         
