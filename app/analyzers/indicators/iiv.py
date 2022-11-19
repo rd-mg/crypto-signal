@@ -32,7 +32,8 @@ class IIV(IndicatorUtils):
 
         dataframe['is_hot'] = False
         dataframe['is_cold'] = False
-        dataframe['is_hot'] = zvol & (dataframe['close'] > dataframe['open']) & (dataframe["iiv"] >= hot_thresh)
-        dataframe['is_cold'] = zvol & (dataframe['close'] < dataframe['open']) & (dataframe["iiv"] >= hot_thresh)
+        dataframe['is_hot'] = (dataframe['close'] > dataframe['open']) & (dataframe["iiv"] >= hot_thresh) & (dataframe['volume'] > dataframe['volume'].shift())
+        dataframe['is_cold'] = (dataframe['close'] < dataframe['open']) & (
+            dataframe["iiv"] >= hot_thresh) & (dataframe['volume'] > dataframe['volume'].shift())
 
         return dataframe
