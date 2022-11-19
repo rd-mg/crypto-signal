@@ -3,19 +3,21 @@
 
 import numpy as np
 from scipy import stats
+import pandas_ta as pta
+
 
 from analyzers.utils import IndicatorUtils
 
 
 class IIV(IndicatorUtils):
-    def analyze(self, historical_data, signal=['iiv'], hot_thresh=10, cold_thresh=0):
+    def analyze(self, historical_data, signal=['iiv'], hot_thresh=2, cold_thresh=0, period_count=9):
         """Performs an analysis about the increase in volumen on the historical data
 
         Args:
             historical_data (list): A matrix of historical OHCLV data.
             signal (list, optional): Defaults to iiv. The indicator line to check hot against.
             hot_thresh (float, optional): Defaults to 10. 
-            cold_thresh: Unused
+            cold_thresh: below hot+thresh
 
 
         Returns:
@@ -23,15 +25,15 @@ class IIV(IndicatorUtils):
         """
 
         dataframe = self.convert_to_dataframe(historical_data)
+        
+        dataframe.ta.zscore(close= dataframe['volume'], length= period_count, std = hot_thresh, append= True)
+        dataframe['iiv'] = np.abs(dataframe[f"ZS_{period_count}"])
+        dataframe.dropna(how='all', inplace=True)
 
-        z = np.abs(stats.zscore(dataframe['volume']))
-        filtered = dataframe.volume[(z < 3)]
-
-        previous_mean = filtered.mean()
-
-        dataframe[signal[0]] = dataframe['volume'] / previous_mean
-
-        dataframe['is_hot'] = dataframe[signal[0]] >= hot_thresh
+        dataframe['is_hot'] = False
         dataframe['is_cold'] = False
+        zvol = (dataframe["iiv"] >= hot_thresh) & (dataframe['volume'] > dataframe['volume'].shift(1))
+        dataframe['is_hot'] = zvol & (dataframe['close'] > dataframe['open'])
+        dataframe['is_cold'] = zvol & (dataframe['close'] < dataframe['open'])
 
         return dataframe
