@@ -51,7 +51,9 @@ class StrategyAnalyzer():
             'natr': natr.NATR().analyze,
             'bollinger_bands': bollinger_bands.Bollinger().analyze,
             'roc': roc.ROC().analyze,
-            'ifish_stoch': ifish_stoch.IFISH_STOCH().analyze
+            'ifish_stoch': ifish_stoch.IFISH_STOCH().analyze,
+            'iip': iip.IIP().analyze
+
         }
 
         return dispatcher

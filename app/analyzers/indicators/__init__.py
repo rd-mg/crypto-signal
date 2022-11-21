@@ -21,5 +21,6 @@ __all__ = [
     'natr',
     'bollinger_bands',
     'roc',
-    'ifish_stoch'
+    'ifish_stoch', 
+    'iip'
 ]
