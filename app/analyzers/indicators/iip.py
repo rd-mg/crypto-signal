@@ -26,14 +26,15 @@ class IIP(IndicatorUtils):
 
         dataframe = self.convert_to_dataframe(historical_data)
         
-        dataframe.ta.roc(length= period_count, append= True)
-        dataframe.ta.zscore(close= dataframe[f'ROC_{period_count}'], length= period_count, std = hot_thresh, append= True)
+        dataframe['candle_length'] = np.abs(dataframe['close']*100000 - dataframe['open']*100000)
+        dataframe.ta.zscore(close= dataframe['candle_length'], length=period_count, std=hot_thresh, append=True)
         dataframe['iip'] = np.abs(dataframe[f"ZS_{period_count}"])
         dataframe.dropna(how='all', inplace=True)
 
         dataframe['is_hot'] = False
         dataframe['is_cold'] = False
-        dataframe['is_hot'] = (dataframe["iip"] >= hot_thresh) & (dataframe[f'ROC_{period_count}'] > 0)
-        dataframe['is_cold'] = (dataframe["iip"] >= hot_thresh) & (dataframe[f'ROC_{period_count}'] < 0)
+        dataframe['is_hot'] = (dataframe["iip"] >= hot_thresh) & (dataframe['close'] > dataframe['open'])
+        dataframe['is_cold'] = (dataframe["iip"] >= hot_thresh) & (dataframe['close'] < dataframe['open'])
+        print(dataframe['candle_length'], dataframe[f"ZS_{period_count}"])
 
         return dataframe
