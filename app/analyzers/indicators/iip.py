@@ -35,6 +35,5 @@ class IIP(IndicatorUtils):
         dataframe['is_cold'] = False
         dataframe['is_hot'] = (dataframe["iip"] >= hot_thresh) & (dataframe['close'] > dataframe['open'])
         dataframe['is_cold'] = (dataframe["iip"] >= hot_thresh) & (dataframe['close'] < dataframe['open'])
-        print(dataframe['candle_length'], dataframe[f"ZS_{period_count}"])
-
+        
         return dataframe

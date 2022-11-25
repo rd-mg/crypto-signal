@@ -23,7 +23,7 @@ Development branch to testing new features. This develop version has a lot of im
 - New Indicator ROC
 - New indicator IFish Stoch
 - Added pandas-ta and dependencies in requirements
-- New indicator IIP
+- New indicator IIP (price)
 
 
 ## Installing And Running
