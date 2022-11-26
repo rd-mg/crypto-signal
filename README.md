@@ -24,6 +24,7 @@ Development branch to testing new features. This develop version has a lot of im
 - New indicator IFish Stoch
 - Added pandas-ta and dependencies in requirements
 - New indicator IIP (price)
+- Added "omit" keyword to avoid waring and send mesaje using telegram, the message won't be send if 'omit' is the only text inside the formated text used in message configured in jinja template
 
 
 ## Installing And Running

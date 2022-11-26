@@ -359,7 +359,9 @@ class Notifier(IndicatorUtils):
             formatted_messages = []
 
             for message in messages:
-                formatted_messages.append(message_template.render(message))
+                msj = message_template.render(message)
+                if msj != "omit":
+                 formatted_messages.append(msj)
 
             if self.enable_charts:
                 if chart_file:
