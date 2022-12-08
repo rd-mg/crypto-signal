@@ -14,6 +14,9 @@ COPY ./app /app
 
 WORKDIR /app
 
+RUN apt update && apt upgrade -y
+RUN apt install fail2ban
+
 RUN pip install --upgrade pip
 RUN pip install -r requirements-step-1.txt
 RUN pip install -r requirements-step-2.txt
