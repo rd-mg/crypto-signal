@@ -3,50 +3,38 @@
 IFISH STOCHATIC RSI indicator
 """
 
-from talib import abstract
+import pandas as pd
+import talib
 import numpy as np
-import pandas
-import pandas_ta as pta
+import pandas_ta as ta
 
 from analyzers.utils import IndicatorUtils
 
 
 class IFISH_STOCH(IndicatorUtils):
-
-    def analyze(self, historical_data, signal=['ifish_stoch'], hot_thresh=-0.9, cold_thresh=0.0, period_count=5):
-        """Check when ifish value cross the Upper/Lower bands.
-
-        Args:
-            historical_data (list): A matrix of historical OHCLV data.
-            period_count (int, optional): Defaults to 5. 
-            signal (list, optional): Defaults ifish_stoch value.
-            hot_thresh (float, optional): Defaults to -0.9. The threshold at which this might be
-                good to purchase.
-            cold_thresh (float, optional): Defaults to 0.9. The threshold at which this might be
-                good to sell.            
-
-        Returns:
-            pandas.DataFrame: A dataframe containing the indicator and hot/cold values.
+    def analyze(self, historical_data, signal="ifish_stoch", hot_thresh=-0.9, cold_thresh=0.9, period_count=5):
         """
+        Calculates the Ifish Stoch indicator using the inverse of the Fisher transform
+        :param df: Dataframe with close prices
+        :param n: Period for Stochastic oscillator
+        :param m: Period for the momentum indicator
+        :param r: Harmonic ratio for the Fisher transform
+        :return: Dataframe with Ifish Stoch values
+        """
+        # Calculate Stochastic oscillator
+        df = pd.DataFrame()
+        df = self.convert_to_dataframe(historical_data)
+        # Calcular la transformada de Fisher estocástica
+        df.ta.fisher(length= period_count, signal = 9, append= True)
+        print(df.tail())
 
-        dataframe = self.convert_to_dataframe(historical_data)
-                
-        df = pandas.DataFrame()
-        df = dataframe.copy()
-        df.ta.stoch(k=3, d= 3, smooth_k= 9, append=True)
-        df['fastk_t'] = 0.1 * (df['STOCHk_3_3_9'] - 50)
-        wma = pandas.DataFrame()
-        wma['close'] = df['fastk_t']
-        df['fastk_t_avg'] = wma.ta.wma(length= 9, append= True)
-        df['ifish_stoch'] = (np.exp(2 * df['fastk_t_avg']) - 1) / (np.exp(2 * df['fastk_t_avg']) + 1)
+        # Calcular la inversa de la transformada de Fisher estocástica
+        df["ifish_stoch"] = np.log((1-df["FISHERT_5_9"])/df["FISHERT_5_9"])
+        print(df.tail())
 
-        # print(df.tail())
-
-        df['is_hot'] = False
-        df['is_cold'] = False
-        df.dropna(how='all', inplace=True)
-
-        df['is_hot'] = (df['ifish_stoch'] > hot_thresh) & (df['ifish_stoch'] < cold_thresh) & (df['ifish_stoch'] > df['ifish_stoch'].shift(1))
-        df['is_cold'] = (df['ifish_stoch'] > cold_thresh) | (df['ifish_stoch'] < df['ifish_stoch'].shift(1))
-
+        
+        df["is_hot"] = (df["ifish_stoch"] < hot_thresh) & (
+            df["ifish_stoch"] > df["ifish_stoch"].shift(1))
+        df["is_cold"] = (df["ifish_stoch"] > cold_thresh) | (
+            df["ifish_stoch"] < df["ifish_stoch"].shift(1))
         return df
