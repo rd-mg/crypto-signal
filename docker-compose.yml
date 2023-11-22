@@ -1,5 +1,5 @@
-version: '3'
-
+version: '3.8'
 services:
-  app:
+  crypto-signal_app:
     build: .
+    image: crypto-signal_app:latest
