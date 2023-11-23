@@ -9,7 +9,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class UpTrend(IndicatorUtils):
-    def analyze(self, key_indicator, key_signal, key_indicator_index, key_period_count=1):
+    def analyze(self, key_indicator, key_indicator_index, key_signal, key_period_count=1):
         """ Tests for key_indicator is going uptrend seeing period count back.
 
         Args:

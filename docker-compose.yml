@@ -3,3 +3,4 @@ services:
   crypto-signal_app:
     build: .
     image: crypto-signal_app:latest
+    restart: "no"

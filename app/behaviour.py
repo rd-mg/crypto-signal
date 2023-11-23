@@ -392,7 +392,6 @@ class Behaviour():
         uptrend_dispatcher = self.strategy_analyzer.uptrend_dispatcher()
         results = {uptrend: list()
                    for uptrend in self.uptrend_conf.keys()}
-
         for uptrend in self.uptrend_conf:
             if uptrend not in uptrend_dispatcher:
                 self.logger.warn("No such uptrend %s, skipping.", uptrend)
@@ -410,8 +409,8 @@ class Behaviour():
 
                     dispatcher_args = {
                         'key_indicator': key_indicator['result'],
-                        'key_signal': uptrend_conf['key_signal'],
                         'key_indicator_index': uptrend_conf['key_indicator_index'],
+                        'key_signal': uptrend_conf['key_signal'],
                         'key_period_count': uptrend_conf['key_period_count']
                     }
                 except Exception as e:
