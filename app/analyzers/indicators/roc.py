@@ -10,7 +10,7 @@ from analyzers.utils import IndicatorUtils
 
 
 class ROC(IndicatorUtils):
-    def analyze(self, historical_data, signal=['roc'], hot_thresh=1, cold_thresh=-1, period_count=4):
+    def analyze(self, historical_data, signal=['roc'], hot_thresh=1.5, cold_thresh=-1.5, period_count=4):
         """Performs an ROC analysis on the historical data
 
                 Args:
@@ -26,6 +26,6 @@ class ROC(IndicatorUtils):
         roc_values.dropna(how='all', inplace=True)
         roc_values.rename(columns={0: 'roc'}, inplace=True)
         roc_values['is_hot'] = (roc_values["roc"] >= hot_thresh)
-        roc_values['is_cold'] = (roc_values["roc"] <= hot_thresh)
+        roc_values['is_cold'] = (roc_values["roc"] <= cold_thresh)
 
         return roc_values
