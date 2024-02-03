@@ -610,17 +610,20 @@ class Notifier(IndicatorUtils):
         new_messages = dict()
         ohlcv_values = dict()
         lrsi_values = dict()
+        hma_values = dict()
 
         for exchange in new_analysis:
             new_messages[exchange] = dict()
             ohlcv_values[exchange] = dict()
             lrsi_values[exchange] = dict()
+            hma_values[exchange] = dict()
 
             for market_pair in new_analysis[exchange]:
 
                 new_messages[exchange][market_pair] = dict()
                 ohlcv_values[exchange][market_pair] = dict()
                 lrsi_values[exchange][market_pair] = dict()
+                hma_values[exchange][market_pair] = dict()
 
                 # Getting price values for each market pair and candle period
                 for indicator_type in new_analysis[exchange][market_pair]:
@@ -641,6 +644,16 @@ class Notifier(IndicatorUtils):
                                     values[signal] = analysis['result'].iloc[-1][signal]
 
                                 lrsi_values[exchange][market_pair][analysis['config']
+                                ['candle_period']] = values
+                        
+                        # Getting HMA values
+                        if 'hma' in new_analysis[exchange][market_pair]['informants']:
+                            for index, analysis in enumerate(new_analysis[exchange][market_pair]['informants']['hma']):
+                                values = dict()
+                                for signal in analysis['config']['signal']:
+                                    values[signal] = analysis['result'].iloc[-1][signal]
+
+                                hma_values[exchange][market_pair][analysis['config']
                                 ['candle_period']] = values
 
                 for indicator_type in new_analysis[exchange][market_pair]:
@@ -785,6 +798,11 @@ class Notifier(IndicatorUtils):
                                     if candle_period in lrsi_values[exchange][market_pair]:
                                         lrsi = lrsi_values[exchange][market_pair][candle_period]['lrsi']
                                         lrsi = format(lrsi, '.2f')
+                                        
+                                    hma = ''
+                                    if candle_period in hma_values[exchange][market_pair]:
+                                        hma = hma_values[exchange][market_pair][candle_period]['hma']
+                                        hma = format(hma, '.2f')
 
                                     """
                                     new_message = message_template.render(
@@ -803,7 +821,7 @@ class Notifier(IndicatorUtils):
                                         base_currency=base_currency,
                                         quote_currency=quote_currency, indicator=indicator, indicator_number=index,
                                         analysis=analysis, status=status, last_status=last_status,
-                                        prices=prices, lrsi=lrsi, creation_date=creation_date,
+                                        prices=prices, lrsi=lrsi, hma=hma, creation_date=creation_date,
                                         hot_cold_label=hot_cold_label,
                                         indicator_label=indicator_label, price_value=price_value,
                                         decimal_format=decimal_format)

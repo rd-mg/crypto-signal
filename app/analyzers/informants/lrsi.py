@@ -75,6 +75,6 @@ class LRSI(IndicatorUtils):
         dataframe = self.convert_to_dataframe(historical_data)
 
         dataframe['lrsi'] = dataframe.close.apply(
-            lambda x: self.apply_filter(x, 0.7))
+            lambda x: self.apply_filter(x, 0.5))
 
         return dataframe

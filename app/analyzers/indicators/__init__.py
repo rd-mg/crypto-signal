@@ -8,6 +8,8 @@ __all__ = [
     'momentum',
     'rsi',
     'stoch_rsi',
+    'stoch_hma_avg_rsi',
+    'stoch_hma',
     'mfi',
     'obv',
     'iiv',

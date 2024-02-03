@@ -114,6 +114,26 @@ indicators:
       cold: 80
       candle_period: 1d
       period_count: 14
+  stoch_hma_avg_rsi:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: once
+      signal:
+        - stoch_hma_avg_rsi
+      hot: 20
+      cold: 80
+      candle_period: 1d
+      period_count: 14
+  stoch_hma:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: once
+      signal:
+        - stoch_hma
+      hot: 50
+      cold: 50
+      candle_period: 4h
+      period_count: 9
   macd:
     - enabled: true
       alert_enabled: true
@@ -198,6 +218,12 @@ informants:
         - ema
       candle_period: 1d
       period_count: 15
+  hma:
+    - enabled: true
+      signal:
+        - hma
+      candle_period: 1d
+      period_count: 9
   ohlcv:
     - enabled: true
       signal:
