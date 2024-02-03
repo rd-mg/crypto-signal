@@ -92,8 +92,21 @@ class StochHMAAVGRSI(IndicatorUtils):
         stoch_hma_avg_values.dropna(inplace=True)
         stoch_hma_avg_values = stoch_hma_avg_values.to_frame(name='stoch_hma_avg_rsi')
         
+        stoch_hma_avg_values['prev_stoch_hma'] = stoch_hma_avg_values['stoch_hma_avg_rsi'].shift()
+
         # Determine hot and cold signals
         stoch_hma_avg_values['is_hot'] = stoch_hma_avg_values['stoch_hma_avg_rsi'].apply(lambda x: x <= hot_thresh)
         stoch_hma_avg_values['is_cold'] = stoch_hma_avg_values['stoch_hma_avg_rsi'].apply(lambda x: x > cold_thresh)
+        
+        # Determine hot and cold signals using 'apply' with lambda function
+        stoch_hma_avg_values['is_hot'] = stoch_hma_avg_values.apply(
+            lambda row: ((row['stoch_hma_avg_rsi'] <= hot_thresh) & (row['stoch_hma_avg_rsi'] > row['prev_stoch_hma'])) | (row['stoch_hma_avg_rsi'] == 0),
+            axis=1
+        )
+
+        stoch_hma_avg_values['is_cold'] = stoch_hma_avg_values.apply(
+            lambda row: (row['stoch_hma_avg_rsi'] > cold_thresh) | (row['stoch_hma_avg_rsi'] < row['prev_stoch_hma']) | (row['stoch_hma_avg_rsi'] == 100),
+            axis=1
+        )
 
         return stoch_hma_avg_values
