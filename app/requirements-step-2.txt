@@ -11,7 +11,7 @@ tenacity>=4.8.0
 python-telegram-bot>=10.0.1
 discord-webhook>=0.15.0
 jinja2>=2.10
-requests>=2.20.0
+requests>=2.32.0
 PyYAML>=5.1
 newtulipy
 matplotlib>=3.0.1
