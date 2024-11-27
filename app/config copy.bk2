@@ -244,6 +244,8 @@ indicators:
     - enabled: false
   momentum:
     - enabled: false
+  cci:
+    - enabled: false
   mfi:
     - enabled: false
   obv:

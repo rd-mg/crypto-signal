@@ -75,6 +75,19 @@ indicators:
       cold: 0
       candle_period: 1d
       period_count: 10
+  cci:
+    - enabled: true
+      candle_period: 4h
+      alert_enabled: true
+      alert_frequency: always
+      cold: 100
+      hot: -100
+      signal:
+        - cci
+      hot_label: 'Momentum Increasing or OverSold'
+      cold_label: 'Momentum Decreasing or OverBought'
+      indicator_label: 'CCI 4h'
+      mute_cold: false
   mfi:
     - enabled: true
       alert_enabled: true

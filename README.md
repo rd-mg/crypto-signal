@@ -559,7 +559,26 @@ indicators:
       signal:
         - close    
 ```
+#### CCI
 
+It is a volatility and momentum indicator which capitalizes on the tendency for price to break out strongly after consolidating in a tight trading range.
+
+```
+indicators:
+    cci:
+    - enabled: true
+      candle_period: 4h
+      alert_enabled: true
+      alert_frequency: always
+      cold: 100
+      hot: -100
+      signal:
+        - cci
+      hot_label: 'Momentum Increasing or OverSold'
+      cold_label: 'Momentum Decreasing or OverBought'
+      indicator_label: 'CCI 4h'
+      mute_cold: false   
+```
 #### Chart images on webhook
 
 The config for a webhook notifier is the same as original CryptoSignal, no changes here, BUT the data sent in the request is completely different. 

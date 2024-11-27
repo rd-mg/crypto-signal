@@ -397,6 +397,7 @@ description: Valid values are on a per indicator basis see the table below. Each
 KLINGER OSCILLATOR - kvo, kvo_signal
 ADX - adx
 MOMENTUM - momentum
+CCI - cci
 RSI - rsi
 MACD - macd, macdsignal, macdhist
 ICHIMOKU - leading_span_a, leading_span_b

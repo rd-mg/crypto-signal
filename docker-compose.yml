@@ -4,3 +4,6 @@ services:
     build: .
     image: crypto-signal_app:latest
     restart: "always"
+    container_name: cryptosignal
+    volumes:
+      - "./app:/app"
