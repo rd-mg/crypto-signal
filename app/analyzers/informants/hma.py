@@ -31,7 +31,7 @@ def hull_moving_average(dataframe, period=9):
 
 class HMA(IndicatorUtils):
     def analyze(self, historical_data, period_count=3):
-        """Performs an EMA analysis on the historical data
+        """Performs an HMA analysis on the historical data
 
         Args:
         historical_data (list): A matrix of historical OHCLV data.

@@ -1,0 +1,650 @@
+# COPIED AND MODIFIED FROM APP/CONFIG.YML
+# This is the config.yml to modify
+
+settings:
+  log_mode: text
+  log_level: INFO
+  enable_charts: false
+  output_mode: cli
+  update_interval: 300
+  start_worker_interval: 5
+  market_data_chunk_size: 70
+  # Default timezome UTC
+  timezone: America/Caracas
+  market_pairs:
+    # - 1INCH/USDT
+    # - AAVE/USDT
+    - ADA/USDT
+    # - AGIX/USDT
+    # - ALGO/USDT
+    - APE/USDT
+    - APT/USDT
+    # - ARB/USDT
+    - ARKM/USDT
+    # - ATOM/USDT
+    # - AUDIO/USDT
+    # - AVAX/USDT
+    - AXS/USDT
+    - BEAMX/USDT
+    - BNB/USDT
+    - BONK/USDT
+    - BTC/USDT
+    #- BCH/USDT
+    - CAKE/USDT
+    - CTXC/USDT
+    # - BTTC/USDT
+    # - COTI/USDT
+    # - DODO/USDT
+    # - DOT/USDT
+    # - EGLD/USDT
+    # - ETC/USDT
+    - ETH/USDT
+    # - FET/USDT
+    - FLOKI/USDT
+    # - GALA/USDT
+    # - GLM/USDT
+    # - GMT/USDT
+    # - GRT/USDT
+    # - HBAR/USDT
+    # - ICP/USDT
+    # - IMX/USDT
+    - ILV/USDT
+    - INJ/USDT
+    - JTO/USDT
+    # - LINK/USDT
+    # - LOKA/USDT
+    # - LTC/USDT
+    # - MANA/USDT
+    # - MANTA/USDT
+    - DOT/USDT
+    - MEME/USDT
+    # - WLD/USDT
+    # - ORDI/USDT
+    - NEAR/USDT
+    # - OCEAN/USDT
+    # - VET/USDT
+    # - OP/USDT
+    # - STX/USDT
+    - PENDLE/USDT
+    - PEPE/USDT
+    - PYR/USDT
+    - PYTH/USDT
+    - RENDER/USDT
+    - RONIN/USDT
+    # - ROSE/USDT
+    # - RUNE/USDT
+    # - SAND/USDT
+    # - SEI/USDT
+    - SLP/USDT
+    - SOL/USDT
+    # - SUI/USDT
+    # - SUSHI/USDT
+    # - TFUEL/USDT
+    - THETA/USDT
+    - TIA/USDT
+    # - TRX/USDT
+    # - TWT/USDT
+    # - UNI/USDT
+    # - XLM/USDT
+    # - XRP/USDT
+    # - YGG/USDT
+    # - PIXEL/USDT
+    - WIF/USDT
+
+
+exchanges:
+    binance:
+        required:
+            enabled: true
+        # all_pairs:
+        #   - USDT
+        # exclude: 
+        #   - USDC
+        #   - PAX
+        #   - USDT 
+
+notifiers:
+  stdout:
+    required:
+      enable: true
+    optional:
+      template: "{{base_currency}} {{price_value['5m'].close}} {{status}} {{values}}"
+      #template: "{{ base_currency }} {{ status }} *{{ decimal_format|format(price_value['5m'].close) }}*  {{values}}"
+      # template: "  {% if status in ['DT-1h','UT-1h','DT-4h', 'UT-4h','PUMP','DUMP', 'DUMPING', 'PUMPING' ] %}
+      #                 *${{base_currency}}* *{{ decimal_format|format(price_value['15m'].close) }}* *{{status}}*
+      #             {% else %}
+      #                 *{{base_currency}}* *{{ decimal_format|format(price_value['15m'].close) }}* *{{status}}* {{ '\n' -}} *{{values}}*
+      #             {% endif %}"
+
+  telegram:
+    required:
+      enable: true
+      token: 1737113137:AAFuVKpyYN_Nle0ffnYPNKSXcgg1CnTWROY
+      chat_id: -834013906
+    optional:
+      parse_mode: markdown
+      # template: "  {% if base_currency in ['BTC','BNB','SOL','AXS','ETH', 'LINK', 'TWT', 'AAVE','SLP','MATIC','XLM'] %}
+      #                 *${{base_currency}}* *{{ decimal_format|format(price_value['15m'].close) }}* *{{status}}*
+      #             {% elif status not in ['DT-1h','UT-1h','DT-4h', 'UT-4h','PUMP','DUMP', 'DUMPING', 'PUMPING' ] %}
+      #                 *{{base_currency}}* *{{ decimal_format|format(price_value['15m'].close) }}* *{{status}}*
+      #             {% endif %}"
+      # template: "*${{base_currency}}* *{{ decimal_format|format(price_value['15m'].close) }}* *{{status}}*"
+      template: "  {% if status in ['UT-1st','UT-2nd','DT-1st','DT-2nd','DT-1h','UT-1h','DT-4h', 'UT-4h','PUMP','DUMP'] %}
+                      *${{base_currency}}* *{{status}}* *{{price_value['5m'].close}}* 
+                  {% else %}
+                      *{{base_currency}}* *{{status}}* *{{price_value['5m'].close}}* {{ '\n' -}} {{values}}
+                  {% endif %}"      
+ 
+indicators:
+  rsi: 
+    - enabled: false
+
+  macd:
+    - enabled: false
+  
+  sqzmom:
+    - enabled: false
+      alert_enabled: true
+      alert_frequency: always
+      candle_period: 4h
+      signal:
+        - close 
+
+  stoch_rsi:
+    - enabled: true
+      candle_period: 15m
+      alert_enabled: true
+      alert_frequency: always
+      cold: 95
+      hot: 95
+      signal:
+        - stoch_rsi
+        - slow_k
+        # - slow_d
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'StochRSI 15m'
+      mute_cold: false
+    - enabled: true
+      candle_period: 1h
+      alert_enabled: true
+      alert_frequency: always
+      cold: 60
+      hot: 60
+      signal:
+        - stoch_rsi
+        - slow_k
+        # - slow_d
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'StochRSI 1h'
+      mute_cold: false
+    - enabled: true
+      candle_period: 5m
+      alert_enabled: true
+      alert_frequency: always
+      cold: 99
+      hot: 99
+      signal:
+        # - stoch_rsi
+        - slow_k
+        - slow_d
+
+  stochrsi_cross:
+    - enabled: true
+      candle_period: 15m
+      alert_enabled: true
+      alert_frequency: once
+      cold: 80
+      hot: 80
+      signal:
+        # - stoch_rsi
+        - smooth_k
+        - smooth_d
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'StochRSI Cross 15m'
+      mute_cold: false
+    - enabled: true
+      candle_period: 1h
+      alert_enabled: true
+      alert_frequency: always
+      cold: 80
+      hot: 80
+      signal:
+        # - stoch_rsi
+        - smooth_k
+        - smooth_d
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'StochRSI Cross 1h'
+      mute_cold: false
+
+
+  iiv:
+    - enabled: false
+
+  iip:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      signal:
+        - iip
+      hot: 1.4
+      candle_period: 1h
+      period_count: 9
+      mute_cold: false
+
+  ma_crossover:
+    - enabled: true
+      alert_enabled: true
+      candle_period: 1h
+      alert_frequency: always
+      signal:
+        - fast_values
+        - slow_values
+      ma_fast: 5
+      ma_slow: 7
+      exponential: True
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'MA Cross 1h'
+      mute_cold: false
+    - enabled: true
+      alert_enabled: true
+      candle_period: 4h
+      alert_frequency: always
+      signal:
+        - fast_values
+        - slow_values
+      ma_fast: 4
+      ma_slow: 6
+      exponential: True
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'MA Cross 4h'
+      mute_cold: false
+    - enabled: true
+      alert_enabled: true
+      candle_period: 1d
+      alert_frequency: always
+      signal:
+        - fast_values
+        - slow_values
+      ma_fast: 3
+      ma_slow: 5
+      exponential: True
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'MA Cross 1d'
+      mute_cold: false
+
+  macd_cross:
+    - enabled: false
+      alert_enabled: true
+      candle_period: 15m
+      alert_frequency: always
+      signal:
+        - macd
+        - signal
+        - macdhist
+      hot_label: 'Uptrend is coming'
+      cold_label: 'Downtred is coming'
+      indicator_label: 'MACD Cross 15m'
+
+
+  ichimoku:
+    - enabled: false
+  momentum:
+    - enabled: false
+  cci:
+    - enabled: true
+      candle_period: 5m
+      alert_enabled: true
+      alert_frequency: always
+      cold: 200
+      hot: -200
+      signal:
+        - cci
+      hot_label: 'Momentum Increasing or OverSold'
+      cold_label: 'Momentum Decreasing or OverBought'
+      indicator_label: 'CCI 15m'
+      mute_cold: false
+    - enabled: true
+      candle_period: 15m
+      alert_enabled: true
+      alert_frequency: always
+      cold: 200
+      hot: -200
+      signal:
+        - cci
+      hot_label: 'Momentum Increasing or OverSold'
+      cold_label: 'Momentum Decreasing or OverBought'
+      indicator_label: 'CCI 15m'
+      mute_cold: false
+    - enabled: true
+      candle_period: 1h
+      alert_enabled: true
+      alert_frequency: always
+      cold: 200
+      hot: -200
+      signal:
+        - cci
+      hot_label: 'Momentum Increasing or OverSold'
+      cold_label: 'Momentum Decreasing or OverBought'
+      indicator_label: 'CCI 1h'
+      mute_cold: false
+
+  mfi:
+    - enabled: false
+  obv:
+    - enabled: false
+  bollinger:
+    - enabled: false
+
+  bbp:
+    - enabled: false
+      candle_period: 15m
+      alert_enabled: true
+      alert_frequency: always
+      period_count: 20
+      hot: 0.33
+      cold: 0.4
+      std_dev: 2
+      signal:
+        - bbp
+        # - mfi
+      hot_label: 'Lower Band'
+      cold_label: 'Upper Band'
+      indicator_label: 'Bollinger Crossing 15m'
+      mute_cold: false
+
+  natr:
+    - enabled: false
+      alert_enabled: true
+      alert_frequency: always
+      signal:
+        - natr
+      candle_period: 15m
+      period_count: 9
+      hot_label: 'Hot'
+      cold_label: 'Cold'
+      indicator_label: 'NATR'
+      mute_cold: false
+  bollinger_bands:
+    - enabled: false
+      alert_enabled: true
+      alert_frequency: always
+      signal:
+        # - upperband
+        # - middleband
+        # - lowerband
+        - bbwidth
+      candle_period: 15m
+      period_count: 20
+      hot_label: 'Hot'
+      cold_label: 'Cold'
+      indicator_label: 'BB'
+      mute_cold: false
+
+  ifish_stoch:
+    - enabled: false
+      alert_enabled: true
+      alert_frequency: always
+      signal:
+        - ifish_stoch
+      candle_period: 15m
+      period_count: 5
+      hot: -0.9
+      cold: 0.9
+      hot_label: 'Hot'
+      cold_label: 'Cold'
+      indicator_label: 'Ifish Stoch'
+      mute_cold: false
+
+  stoch_hma_avg_rsi:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      signal:
+        - stoch_hma_avg_rsi
+      hot: 50
+      cold: 50
+      candle_period: 1h
+      period_count: 3
+      mute_cold: false
+
+  stoch_hma:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      signal:
+        - stoch_hma
+      hot: 80
+      cold: 80
+      candle_period: 1h
+      period_count: 9
+
+  roc:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      hot: 1
+      cold: -1
+      signal:
+        - roc
+      candle_period: 15m
+      period_count: 1
+      hot_label: 'Hot'
+      cold_label: 'Cold'
+      indicator_label: 'ROC'
+      mute_cold: false
+
+
+informants:
+  lrsi:
+    - enabled: false
+      alert_enabled: true
+      signal:
+        - lrsi
+      candle_period: 15m
+  hma:
+    - enabled: false
+      signal:
+        - hma
+      candle_period: 1h
+      period_count: 3
+  vwap:
+    - enabled: false
+  sma:
+    - enabled: false
+  ema:
+    - enabled: false
+
+  ohlcv:
+    - enabled: true
+      signal:
+        # - open
+        # - high
+        # - low
+        - close
+        # - volume
+      candle_period: 5m
+
+
+crossovers:
+  std_crossover:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      key_indicator: stoch_rsi
+      key_indicator_index: 1
+      key_indicator_type: indicators
+      key_signal: slow_k
+      crossed_indicator: stoch_hma_avg_rsi
+      crossed_indicator_index: 0
+      crossed_indicator_type: indicators
+      crossed_signal: stoch_hma_avg_rsi
+
+    # Crossunder #1 4h
+    # - enabled: true
+    #   alert_enabled: true
+    #   alert_frequency: once
+    #   key_indicator: stoch_hma_avg_rsi
+    #   key_indicator_index: 0
+    #   key_indicator_type: indicators
+    #   key_signal: stoch_hma_avg_rsi
+    #   crossed_indicator: stoch_rsi
+    #   crossed_indicator_index: 2
+    #   crossed_indicator_type: indicators
+    #   crossed_signal: slow_k
+
+uptrends:
+  std_uptrend:
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      key_indicator: stoch_rsi
+      key_indicator_index: 2
+      key_indicator_type: indicators
+      key_signal: slow_k
+      key_period_count: 1
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      key_indicator: stoch_rsi
+      key_indicator_index: 1
+      key_indicator_type: indicators
+      key_signal: slow_k
+      key_period_count: 1
+    - enabled: true
+      alert_enabled: true
+      alert_frequency: always
+      key_indicator: stoch_rsi
+      key_indicator_index: 0
+      key_indicator_type: indicators
+      key_signal: slow_k
+      key_period_count: 1
+
+
+conditionals:
+#  SIGNALS
+
+
+
+# #### TRENDS
+#     - label: "DT-1st"
+#       cold:
+#         # - std_crossover: 0
+#         - stochrsi_cross: 0
+#         - stochrsi_cross: 1
+#         - stoch_hma: 0 
+#         - cci: 1
+#         - cci: 2
+#         - std_uptrend: 0
+#         - std_uptrend: 1
+        
+        
+#     - label: "UT-1st" 
+#       hot:
+#         # - std_crossover: 0
+#         - stochrsi_cross: 0
+#         - stochrsi_cross: 1
+#         - stoch_hma: 0
+#         - cci: 1
+#         - cci: 2
+#         - std_uptrend: 0
+#         - std_uptrend: 1
+#         # - roc: 1
+        
+# #### TRENDS
+#     - label: "DT-2nd"
+#       cold:
+#         - std_crossover: 0
+#         - stochrsi_cross: 0
+#         - stoch_hma: 0
+#         - cci: 1
+#         - cci: 2
+#         - std_uptrend: 0
+#         - std_uptrend: 1
+        
+#     - label: "UT-2nd" 
+#       hot:
+#         - std_crossover: 0
+#         - stochrsi_cross: 0
+#         - stoch_hma: 0
+#         - cci: 1
+#         - cci: 2
+#         - std_uptrend: 0
+#         - std_uptrend: 1
+        # - roc: 1
+
+    - label: "DemaUP-1h"
+      hot:
+        - ma_crossover: 0
+        
+    - label: "DemaDOWN-1h"
+      cold:
+        - ma_crossover: 0
+
+    - label: "DemaUP-4h"
+      hot:
+        - ma_crossover: 1
+        
+    - label: "DemaDOWN-4h"
+      cold:
+        - ma_crossover: 1
+    
+    - label: "DemaUP-1d"
+      hot:
+        - ma_crossover: 2
+        
+    - label: "DemaDOWN-1d"
+      cold:
+        - ma_crossover: 2
+
+### PUMP DUMP
+
+    # - label: "PUMP"
+    #   hot:
+    #     - iip: 0
+    #     - roc: 0
+
+    # - label: "DUMP" 
+    #   cold:
+    #     - iip: 0
+    #     - roc: 0
+
+    - label: "PUMP2short"
+      hot:
+        - iip: 0
+        - roc: 0
+      cold:
+        - std_uptrend: 0
+        - std_uptrend: 2
+        - cci: 1
+
+    - label: "PUMP2long"
+      hot:
+        - iip: 0
+        - roc: 0
+        - std_uptrend: 0
+        - std_uptrend: 2
+        - cci: 1
+
+    - label: "DUMP2long" 
+      cold:
+        - iip: 0
+        - roc: 0
+        - std_uptrend: 0
+        - std_uptrend: 2
+        - cci: 1
+
+    - label: "DUMP2short" 
+      hot:
+        - std_uptrend: 0
+        - std_uptrend: 2
+        - cci: 1
+      cold:
+        - iip: 0
+        - roc: 0

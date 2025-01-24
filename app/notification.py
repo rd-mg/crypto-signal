@@ -775,9 +775,11 @@ class Notifier(IndicatorUtils):
                                     if len(base_currency) == 2:
                                         base_currency, quote_currency = base_currency
                                     precision = self.market_data[exchange][market_pair]['precision']
-                                    decimal_format = '.{}f'.format(
-                                        precision['price'])
-
+                                    # decimal_format = '.{}f'.format(
+                                    #     precision['price'])
+                                    precision_price = int(precision.get('price', 0))  # Default to 0 if key doesn't exist
+                                    decimal_format = '.{0}f'.format(precision_price)
+                                    
                                     prices = ''
                                     price_value = {}
                                     candle_period = analysis['config']['candle_period']
